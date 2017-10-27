@@ -1,0 +1,28 @@
+{
+  "name": "msr",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "description": "MSR",
+  "author": {
+    "name": "Henry"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.0",
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "pug": "^2.0.0-beta6",
+    "serve-favicon": "^2.3.0",
+    "sqlite3": "^3.1.13",
+    "path": "^0.12.7",
+    "fetch-base64": "^2.0.0",
+    "restler": "^3.4.0",
+    "request": "^2.83.0",
+    "jimp": "^0.2.28",
+    "fs": "^0.0.1-security"
+  }
+}

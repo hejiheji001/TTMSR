@@ -1,0 +1,22 @@
+﻿extends layout
+
+block content
+  div(class="container")
+    h1= title
+    input(type="hidden", id="uk", value=uk)
+    div(class="row row-offcanvas row-offcanvas-right")
+        div(class="col-xs-12 col-sm-9")
+            div(class="get-article-area " id="gacontent")
+                div(class="yue top20")
+                    div(class="action_bar")
+                        h3= "欢迎你，" + user
+                        p 1. 活动开始前2分钟（即58分）之前进入本页面即可
+                        p 2. 然后呢？然后就不用管啦～工具会帮你同步民生银行系统+自动获取验证码+识别验证码+核对验证码+提交抢购任务的
+                        p
+                            b 本工具仅限电脑端使用
+                        p   
+                            b 不要同时使用多个工具，也不要同时在官方平台手动抢
+                        p  
+                            b= "提示3: 该外挂仅限【" + user + "】使用，任何人使用外挂均只会将券抢购至【" + user + "】民生账户"
+                        p   
+                            a(class="btn btn-primary green", onclick="getEnc();", id="autobuy", data-ql="select * from json where url = '", data-qr="'") 开始抢购

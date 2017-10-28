@@ -23,6 +23,18 @@
     "restler": "^3.4.0",
     "request": "^2.83.0",
     "jimp": "^0.2.28",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "md5": "^2.2.1"
+  },
+  "main": "http://localhost:3000",
+  "window": {
+    "title": "天天民生日",
+    "width": 400,
+    "height": 700,
+    "position": "center"
+  },
+  "nodejs": true,
+  "devDependencies": {
+    "javascript-obfuscator": "^0.12.0"
   }
 }

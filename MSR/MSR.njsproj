@@ -39,7 +39,8 @@
     <Compile Include="public\javascripts\onlyone-1.0.0.min.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="public\javascripts\ttmsr.js">
+    <Compile Include="public\javascripts\ttmsr.js" />
+    <Compile Include="public\javascripts\ttmsr-full.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="routes\index.js" />

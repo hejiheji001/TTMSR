@@ -38,12 +38,23 @@ router.post("/getImg", function (req, res) {
 
     Jimp.read(img).then((image) => {
         let filename = "./public/images/tmp.jpg";
-        image.write(filename, function () {
-            var f = path.resolve(__dirname, filename);
 
+        fs.unlink(filename, function (err) {
+            if (err && err.code == 'ENOENT') {
+                // file doens't exist
+                console.info("File doesn't exist, won't remove it.");
+            } else if (err) {
+                // other errors, e.g. maybe we don't have enough permission
+                console.error("Error occurred while trying to remove file");
+            } else {
+                console.info(`removed`);
+            }
+        });
+
+        image.write(filename, function () {
             let stats = fs.statSync(filename);
             let len = stats["size"];
-            let i = rest.file(f, null, len, null, 'image/jpg');
+            let i = rest.file(filename, null, len, null, 'image/jpg');
 
             rest.post('http://api.ruokuai.com/create.json', {
                 multipart: true,
@@ -62,8 +73,8 @@ router.post("/getImg", function (req, res) {
             }).on('complete', function (data) {
                 var captcha = JSON.parse(data);
                 res.json({
-                    "src": base64,
-                    "captcha": captcha
+                    "src": "\\images\\tmp.jpg",
+                    "captcha": captcha.Result.toUpperCase()
                 });
             });
         });

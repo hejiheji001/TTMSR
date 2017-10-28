@@ -176,7 +176,7 @@ var handleReBuy = function(extra){
     captcha = $('#code').val().trim().toUpperCase();
 
 	if(buyTime <= 80){
-		if(buyTime == 1){
+		if(buyTime % 20 == 1){
 			console.log("YQLS" + (new Date()));
 			checkCaptcha(function(result){
 				console.log("YQLE" + (new Date()));
@@ -210,7 +210,7 @@ var handleReBuy = function(extra){
 			});
 			setTimeout(function(){
 				handleReBuy(extra);
-			}, 1000);
+			}, 500);
 		}else{
 			console.log("iframeS" + (new Date()));
 // 			if(window.ifr){
@@ -229,7 +229,7 @@ var handleReBuy = function(extra){
 			setTimeout(function(){
 				console.log("iframeE" + (new Date()));
 				handleReBuy(extra);
-			}, 1000);
+			}, 500);
 		}
 	}else{
 		buyEnd = (new Date()).getTime();
@@ -262,7 +262,8 @@ var changeCode = function(){
             url: codeURL
         },
         success: function (res) {
-            cap.attr("src", res.src);
+            cap.attr("src", res.src + "?r=" + Math.random());
+            $("#code").val(res.captcha);
         },
         error: function (c, u) {
             retryCaptcha(c, u, callback, url);
@@ -284,7 +285,7 @@ var buyIt = function(str) {
             // hintDom.text("点击验证码可以更换图片");
         }
 
-        var cap = $("#captcha");
+        var cap = $("#code").val();
         //if(cap.length == 0){
         //    hintDom.before("<img id=captcha style='width: 50%;' src='https://prefacty.creditcard.cmbc.com.cn/mmc-main-webapp/jcaptcha.img?userKey=" + encodeURIComponent(uk) + "'></img>");    
         //    $("#captcha").after("<input id=code class=form-control placeholder='验证码无需注意大小写, 点击图片可以更换验证码' type=text></input>");
@@ -305,10 +306,10 @@ var buyIt = function(str) {
         //    cap.attr("src", "https://prefacty.creditcard.cmbc.com.cn/mmc-main-webapp/jcaptcha.img?userKey=" + encodeURIComponent(uk) + "&r=" + (new Date()).getTime());
         //}
 
-        // if(captcha.length == 5){ 
-        //     var thisOrder = getThisOrder();
-        //     placeOrder(thisOrder, "#autobuy");
-        // }
+         if(captcha.length == 5){ 
+            var thisOrder = getThisOrder();
+            placeOrder(thisOrder, "#autobuy");
+         }
 
 
         // getCaptcha(function(d) {

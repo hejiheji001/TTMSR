@@ -1,0 +1,128 @@
+﻿body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+
+.notifyjs-bootstrap-base {
+    font-weight: bold;
+    padding: 8px 15px 8px 14px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    white-space: nowrap;
+    padding-left: 15px;
+    background-repeat: no-repeat;
+    background-position: 3px 7px;
+}
+
+.notifyjs-bootstrap-error {
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border-color: #EED3D7;
+}
+
+.notifyjs-bootstrap-success {
+    color: #468847;
+    background-color: #DFF0D8;
+    border-color: #D6E9C6;
+}
+
+.notifyjs-bootstrap-info {
+    color: #3A87AD;
+    background-color: #D9EDF7;
+    border-color: #BCE8F1;
+}
+
+.notifyjs-bootstrap-warn {
+    color: #C09853;
+    background-color: #FCF8E3;
+    border-color: #FBEED5;
+}
+
+.notifyjs-corner {
+    position: fixed;
+    margin: 5px;
+    z-index: 1050;
+}
+
+.notifyjs-corner .notifyjs-wrapper,
+.notifyjs-corner .notifyjs-container {
+    position: relative;
+    display: block;
+    height: inherit;
+    width: inherit;
+    margin: 3px;
+}
+
+.notifyjs-wrapper {
+    z-index: 1;
+    position: absolute;
+    display: inline-block;
+    height: 0;
+    width: 0;
+}
+
+.notifyjs-container {
+    display: none;
+    z-index: 1;
+    position: absolute;
+}
+
+.notifyjs-hidable {
+    cursor: pointer;
+}
+
+[data-notify-text], [data-notify-html] {
+    position: relative;
+}
+
+.notifyjs-arrow {
+    position: absolute;
+    z-index: 2;
+    width: 0;
+    height: 0;
+}
+
+#theheader {
+    display: none !important
+}
+
+#body {
+    margin-top: 0px !important
+}
+
+.btn-primary.green {
+    background-color: #3aac4e !important;
+    color: white !important
+}
+
+#sc {
+    display: none
+}
+
+.btn-primary {
+    margin-left: 10px;
+    white-space: normal !important;
+}
+
+.red {
+    color: red !important
+}
+
+.yue b {
+    font-weight: normal !important;
+    color: #3090e4 !important;
+}
+
+.action_bar {
+    border: 1px solid #eee;
+    padding: 20px;
+    margin-top: 50px;
+}

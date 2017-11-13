@@ -1,0 +1,26 @@
+﻿extends layout
+
+block content
+  div(class="container")
+    h1= title
+    input(type="hidden", id="uk", value=uk)
+    div(class="row row-offcanvas row-offcanvas-right")
+        div(class="col-xs-12 col-sm-9")
+            div(class="get-article-area " id="gacontent")
+                div(class="yue top20")
+                    div(class="action_bar")
+                        h3= "欢迎你，" + user
+                        p 当前版本号
+                            b
+                                a(id="version", href="https://pan.baidu.com/s/1jIGdGLw", target="_blank")
+                        p 当天活动开始前进入本页面即可 然后工具会帮你自动抢购
+                        p
+                            b 本工具仅限电脑端使用
+                        p   
+                            b 不要同时使用多个工具，也不要同时在官方平台手动抢
+                        p  
+                            b 只有[黄色框内]出现SSSSS或者未支付订单或者弹框显示成功了才表示成功，其余情况除非验证码错误否则耐心等
+                        p
+                            b= "提示3: 该外挂仅限【" + user + "】使用，任何人使用外挂均只会将券抢购至【" + user + "】民生账户"
+                        p   
+                            a(class="btn btn-primary green", onclick="getEnc();", id="autobuy", data-ql="select * from json where url = '", data-qr="'") 开始抢购

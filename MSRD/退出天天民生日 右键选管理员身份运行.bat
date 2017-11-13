@@ -1,0 +1,1 @@
+netstat -aon|findstr /i "3000"&&taskkill /f /t /im node.exe

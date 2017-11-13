@@ -29,8 +29,58 @@ router.get('/', function (req, res) {
     goIndex(res);
 });
 
+router.get('/tutorial', function (req, res) {
+    res.render('tutorial', { title: '设置管理员权限'});
+});
+
 router.get('/ttmsr', function (req, res) {
     goIndex(res);
+});
+
+router.get('/updateValid', function (req, ress) {
+    https.get("https://hejiheji001.github.io/account.json", res => {
+        res.setEncoding("utf8");
+        let body = "";
+        res.on("data", data => {
+            body += data;
+        });
+
+        res.on("end", (res) => {
+            body = JSON.parse(body);
+            var accounts = body.account;
+            var valids = body.valid;
+            var accountValues = `INSERT OR IGNORE INTO accounts (wxid, uk, pwd) VALUES ${accounts.map(a => `('${a.wxid}', '${a.uk}', '${a.pwd}')`).join(",")}`;
+            var validsValues = `INSERT OR IGNORE INTO valid (wxid, end) VALUES ${valids.map(v => `('${v.wxid}', '${v.end}')`).join(",")}`;
+            var ar = false;
+            var vr = false;
+
+            var a = new Promise(resolve => {
+                db.run(accountValues, (err) => {
+                    ar = err == null;
+                    resolve(ar);
+                });
+            });
+
+            var v = new Promise(resolve => {
+                db.run(validsValues, (err) => {
+                    vr = err == null;
+                    resolve(vr);
+                });
+            });
+
+
+            var update = async () => {
+                a.then(() => {
+                    v.then(() => {
+                        ress.json({
+                            "reply": ar && vr
+                        });
+                    });
+                });
+            }
+            update();
+        });
+    });
 });
 
 router.post("/getImg", function (req, res) {
@@ -55,17 +105,18 @@ router.post("/getImg", function (req, res) {
             let stats = fs.statSync(filename);
             let len = stats["size"];
             let i = rest.file(filename, null, len, null, 'image/jpg');
+            var form = {
+                "username": "hejiheji001",
+                "password": "CE649C68CCB1763AC369C4A05EEC3914",
+                "typeid": "3050",
+                "softid": "84562",
+                "softkey": "ea41751488db4a43a55cb436cd35afac",
+                "image": i
+            }
 
             rest.post('http://api.ruokuai.com/create.json', {
                 multipart: true,
-                data: {
-                    username: "hejiheji001",
-                    password: "CE649C68CCB1763AC369C4A05EEC3914",
-                    typeid: "3050",
-                    softid: "84562",
-                    softkey: "ea41751488db4a43a55cb436cd35afac",
-                    image: i
-                },
+                data: form,
                 headers: {
                     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0',
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -106,25 +157,25 @@ router.post('/ttmsr', function (req, res) {
     var wxid = req.body.wxid;
     var pwd = req.body.pwd;
     if (wxid && pwd) {
-        db.get(`SELECT pwd, uk, end FROM accounts where wxid = '${wxid}'`, function (err, row) {
+        db.get(`SELECT pwd, uk FROM accounts where wxid = '${wxid}'`, function (err, row) {
             if (row) { 
                 if (row.pwd == pwd) {
-                    if (row.end) {
-                        if (new Date() >= new Date(row.end)) {
-                            goIndex(res, "使用已到期");
-                        }
-                    } else {
-                        if (pwd === Buffer.from(wxid).toString('base64')) {
-                            res.render('changepassword', { title: '修改密码' });
+                    db.get(`SELECT end FROM valid where wxid = '${wxid}'`, function (err, r) {
+                        if (r && (r.end && new Date() >= new Date(r.end))) {
+                            goIndex(res, "使用已到期 如果已经续费请点击更新授权文件按钮 更新完毕请重启工具");
                         } else {
-                            res.render('index', { title: '天天民生日工具增强版', user: wxid, uk: row.uk });
+                            if (pwd === Buffer.from(wxid).toString('base64')) {
+                                res.render('changepassword', { title: '修改密码' });
+                            } else {
+                                res.render('index', { title: '天天民生日工具增强版', user: wxid, uk: row.uk });
+                            }
                         }
-                    }
+                    });                    
                 } else {
                     goIndex(res, "密码错误");
                 }
             } else {
-                goIndex(res, "用户不存在");
+                goIndex(res, "用户不存在 请尝试更新授权 更新完毕后请重启工具");
             }
         });
     }
@@ -142,8 +193,14 @@ router.post('/changepassword', function (req, res) {
     if (wxid && pwd && newpwd) {
         db.get(`SELECT pwd FROM accounts where wxid = '${wxid}' and pwd = '${pwd}'`, function (err, row) {
             if (row.pwd == pwd) {
-                db.run(`UPDATE accounts SET pwd = '${newpwd}' where wxid = '${wxid}' and pwd = '${pwd}'`);
-                goIndex(res, "请用新密码登陆");
+                db.run(`UPDATE accounts SET pwd = '${newpwd}' where wxid = '${wxid}' and pwd = '${pwd}'`, function (err) {
+                    if (err) {
+                        goIndex(res, "请用管理员权限打开工具，具体见登陆按钮右边");
+                    } else {
+                        goIndex(res, "请用新密码登陆");
+                    }
+                });
+                
             } else {
                 goIndex(res, "原密码错误");
             }
@@ -152,7 +209,5 @@ router.post('/changepassword', function (req, res) {
         res.render('changepassword', { title: '修改密码' });
     }
 });
-
-
 
 module.exports = router;

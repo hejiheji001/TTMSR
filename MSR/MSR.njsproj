@@ -40,22 +40,31 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="public\javascripts\ttmsr.js" />
-    <Compile Include="public\javascripts\ttmsr-full.js">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="routes\index.js" />
+    <Content Include="app.vbs" />
+    <Content Include="ico.ico" />
+    <Content Include="node.exe" />
     <Content Include="package.json" />
     <Content Include="public\db\ttmsr.db" />
+    <Content Include="public\images\x1.png" />
+    <Content Include="public\images\x2.png" />
+    <Content Include="public\images\x3.png" />
     <Content Include="public\stylesheets\bootstrap.min.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
+    <Content Include="ttmsr.db" />
     <Content Include="views\changepassword.pug" />
+    <Content Include="views\tutorial.pug">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\welcome.pug" />
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
+    <Content Include="启动天天民生日.bat" />
+    <Content Include="完全退出.bat" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
